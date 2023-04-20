@@ -1,0 +1,106 @@
+# ====================================================================
+# Runtime mode are only one
+# ====================================================================
+info:
+  name: 企知道商城检索中心服务开发配置
+  contact: 知云网络
+server:
+  port: ${QZD_SERVER_PORT:5082}
+mybatis-plus:
+  typeAliasesPackage: com.qizhidao.patent.search
+  mapperLocations:  classpath:mapper/**/*.xml
+
+
+spring:
+  redis:
+    host: qzd-redis-dev.qizhidao.net
+    database: 12
+    port: 6381
+    password: Zhiyun_6381
+    timeout: 500
+    jedis:
+      pool:
+        max-active: 2000
+        max-wait: 500
+        max-idle: 50
+
+  datasource:
+    url: jdbc:mysql://qzd-db-dev.qizhidao.net:3306/shop_search_db?useUnicode=true&characterEncoding=UTF8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2b8:00
+    username: shop_search_rw
+    password: kuGoybvlQ1Hc
+    driverClassName: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    initialSize: 5
+    minIdle: 5
+    maxActive: 500
+    maxWait: 30000
+    timeBetweenEvictionRunsMillis: 2000
+    minEvictableIdleTimeMillis: 120000
+    maxEvictableIdleTimeMillis: 600000
+    validationQuery: select test
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    
+  mail:
+    host: smtphz.qiye.163.com
+    port: 994
+    username: msgdev@qizhidao.com
+    password: OvEFu6JXSWLeAjaH
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false  
+  
+
+
+qzd:
+  sentinel:
+    enable: true
+    projectName: qzd-patent
+
+bigdata:
+  patent-url: http://ips-gateway-nts-lan.qizhidao.com
+
+amid:
+  trs-url: http://qzd-trs-dev-lan.qizhidao.com/trs
+
+
+niu:
+  trans:
+    url: http://120.25.170.174:8088/
+    apiKey: d2c1b71e8605154216195062ca4ec455
+
+es:
+  index:
+    attached: patent_intelligent_imgs_alias
+
+ips:
+  patent:
+    service-url: http://wzdata-api-dev-lan.qizhidao.com
+  workspace:
+    service-url: http://wzdata-api-dev-lan.qizhidao.com
+    patent:
+      service-url: http://ips-gateway-dev-lan.qizhidao.com
+
+##新增配置
+feign:
+  client:
+    config:
+      big-data:
+        connectTimeout: 5000  # 相当于Request.Optionsn 连接超时时间
+        readTimeout: 50000
+
+unLogin:
+  page:
+    size: 2
